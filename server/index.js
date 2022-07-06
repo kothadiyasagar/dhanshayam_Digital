@@ -39,7 +39,8 @@ const manageDefaultCategory = async () => {
     if (existingRoot) return
     const rootCategory = new Categories({
         _id: ObjectId(rootId),
-        name: 'ROOT'
+        title: 'ROOT',
+        key:"ROOT"
     })
     await rootCategory.save()
     console.log('Default category saved.')
@@ -47,7 +48,7 @@ const manageDefaultCategory = async () => {
 
 mongoose.connect('mongodb://localhost:27017/test1', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true, 
 }).then(async () => {
     console.log('Connected to MongoDB');
     await manageDefaultCategory()

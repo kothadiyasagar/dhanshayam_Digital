@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Row, Col, Form, Input, Select,  } from 'antd'
+import { Button, Row, Col, Form, Input, Select, DataNode, TreeProps  } from 'antd'
 import List from './list.jsx';
+import { DownOutlined } from '@ant-design/icons';
+import { Tree } from 'antd';
+// import type { DataNode, TreeProps } from 'antd/lib/tree';
 import './App.css';
 const { Option } = Select
 
@@ -19,7 +22,7 @@ const App = () => {
   }
 
   const createNewCategory = async (formValues) => {
-    // console.log(formValues,"sagar")
+    console.log(formValues,"sagar")
     await fetch('http://localhost:8085/categories', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -33,14 +36,14 @@ const App = () => {
   </Option>)
 
   const rootCategory = categories.find((category) => category?._id?.toString() === '62bfd4c158c0a636474a8b7f')
-  // console.log(rootCategory)
+   console.log(rootCategory)
 
   const renderItem = (item) => <li  onClick={()=>setselect(item._id)}>{item.name}</li>
 
   const renderListItems = (category) => {
     return category?.subCategories?.map((subCategory) => {
       const matchedCategory = typeof subCategory === 'object' ? subCategory : categories.find((cat) => cat._id?.toString() === subCategory?.toString())
-      // console.log({ matchedCategory })
+       console.log({ matchedCategory })
       return !matchedCategory.subCategories.length ? renderItem(matchedCategory) :
         <li onClick={()=>setselect(matchedCategory._id)}>
           {matchedCategory.name}
@@ -52,7 +55,7 @@ const App = () => {
   }
 
   const renderedCategories = <ul>{renderListItems(rootCategory)}</ul>
-
+console.log(categories)
   return (
     <div className="App">
       <Row>
@@ -83,6 +86,7 @@ const App = () => {
         </Col>
       </Row>
       {/* <List  categories={categories} /> */}
+      <Tree />
     </div>
    
   );
